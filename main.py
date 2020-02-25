@@ -57,7 +57,7 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 depth = 20 # For ResNet, specify the depth (e.g. ResNet50: depth=50)
-model = resnet_v1.resnet_v1(input_shape=input_shape, depth=depth, attention_module=attention_module)
+model = resnet_v1.resnet_v1(input_shape=input_shape, depth=depth, attention_module=attention_module, activation='sigmoid')
 # model = resnet_v2.resnet_v2(input_shape=input_shape, depth=depth, attention_module=attention_module)   
 # model = resnext.ResNext(input_shape=input_shape, classes=num_classes, attention_module=attention_module)
 # model = mobilenets.MobileNet(input_shape=input_shape, classes=num_classes, attention_module=attention_module)
@@ -65,7 +65,10 @@ model = resnet_v1.resnet_v1(input_shape=input_shape, depth=depth, attention_modu
 # model = inception_resnet_v2.InceptionResNetV2(input_shape=input_shape, classes=num_classes, attention_module=attention_module)
 # model = densenet.DenseNet(input_shape=input_shape, classes=num_classes, attention_module=attention_module)
 
-model.compile(loss='categorical_crossentropy',
+# model.compile(loss='categorical_crossentropy',
+#               optimizer=Adam(lr=lr_schedule(0)),
+#               metrics=['accuracy'])
+model.compile(loss='binary_crossentropy',
               optimizer=Adam(lr=lr_schedule(0)),
               metrics=['accuracy'])
 model.summary()
